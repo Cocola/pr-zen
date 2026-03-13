@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="#install">Install</a> · <a href="#features">Features</a> · <a href="#how-it-works">How it works</a> · <a href="#roadmap">Roadmap</a>
+  <a href="#install">Install</a> · <a href="#features">Features</a> · <a href="#how-it-works">How it works</a> · <a href="#keyboard-shortcuts">Shortcuts</a> · <a href="#privacy">Privacy</a>
 </p>
 
 ---
@@ -28,6 +28,12 @@ PR Zen doesn't hide anything. It gives you a **bird's-eye view** of the entire P
 
 ## Install
 
+### Chrome Extension (recommended)
+
+Install from the [Chrome Web Store](https://chrome.google.com/webstore/detail/cngllfifbbjllfeloceeiihafomekdee) — or load unpacked from the `extension/` folder for development.
+
+### Userscript (legacy)
+
 > Requires [Tampermonkey](https://www.tampermonkey.net/) (Chrome, Firefox, Edge, Safari)
 
 1. Install Tampermonkey for your browser
@@ -37,9 +43,9 @@ PR Zen doesn't hide anything. It gives you a **bird's-eye view** of the entire P
 ## Features
 
 **Floating Pill** — sits in the bottom-right corner showing live stats:
-`2 reviews · 28 bots · 9 alerts`
+`2 reviews · 21 bots · 4 alerts`
 
-**Navigator Panel** — click the pill (or press `Alt+Z`) to open a chronological list of all PR comments, classified by type:
+**Timeline Panel** — click the pill (or press `Alt+Z`) to open a chronological timeline of all PR comments, classified by type:
 
 | Color | Type | Description |
 |-------|------|-------------|
@@ -51,7 +57,13 @@ PR Zen doesn't hide anything. It gives you a **bird's-eye view** of the entire P
 
 **Grouped entries** — consecutive identical bot reports are collapsed into a single entry with a count badge (`×4`).
 
-**Click to navigate** — click any item to smooth-scroll to that comment, with a temporary highlight. Compensates for GitHub's sticky header.
+**Click to navigate** — click any item to smooth-scroll to that comment, with a temporary highlight.
+
+**Light & dark mode** — adapts to your system theme via `prefers-color-scheme`.
+
+**Accessible** — WCAG AA: full keyboard navigation, ARIA roles, focus management, `prefers-reduced-motion` support.
+
+**Configurable** — customize bot patterns, alert keywords, and activation threshold from the extension popup.
 
 **Works with GitHub SPA** — handles Turbo/pjax navigation without breaking.
 
@@ -59,11 +71,11 @@ PR Zen doesn't hide anything. It gives you a **bird's-eye view** of the entire P
 
 ## How it Works
 
-PR Zen is a single-file userscript with zero dependencies. It:
+PR Zen is a Chrome extension (Manifest V3) with zero dependencies. It:
 
 1. Scans `.js-timeline-item` elements in the PR conversation
 2. Classifies each comment as human, bot, or alert using author patterns and content keywords
-3. Renders a floating pill + nav panel with vanilla DOM manipulation
+3. Renders a floating pill + timeline panel with vanilla DOM manipulation
 4. Uses `MutationObserver` to stay in sync with GitHub's dynamic DOM
 
 ### Bot detection
@@ -79,15 +91,13 @@ Keywords in comment body: `failed`, `error`, `decreased`, `below threshold`, `cr
 | Shortcut | Action |
 |----------|--------|
 | `Alt+Z` | Toggle the navigator panel |
+| `↑` `↓` | Navigate between items |
+| `Enter` | Scroll to selected item |
 | `Escape` | Close the panel |
 
-## Roadmap
+## Privacy
 
-- [ ] Fallback chain for DOM selectors (resilience to GitHub updates)
-- [ ] Filter by type in the nav panel
-- [ ] Scroll spy — active item follows scroll position
-- [ ] Chrome/Firefox extension (Manifest V3) with options popup
-- [ ] Chrome Web Store + Firefox Add-ons distribution
+PR Zen does not collect, transmit, or store any personal data. See [Privacy Policy](PRIVACY.md).
 
 ## License
 
