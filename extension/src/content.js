@@ -348,11 +348,21 @@ let pill = null;
 let panel = null;
 let isOpen = false;
 let isRefreshing = false;
+let lastDataHash = '';
+let hasAnimated = false;
 
 function openPanel() {
   if (isOpen) return;
   isOpen = true;
-  if (panel) panel.classList.add('przen-open');
+  if (panel) {
+    panel.classList.add('przen-open');
+    if (!hasAnimated) {
+      hasAnimated = true;
+      panel.classList.add('przen-animating');
+      // Remove animating class after stagger completes to prevent re-trigger
+      setTimeout(() => panel.classList.remove('przen-animating'), 600);
+    }
+  }
 }
 
 function closePanel() {
@@ -390,6 +400,12 @@ function refresh() {
     }
 
     pill.style.display = 'flex';
+
+    // Skip rebuild if data hasn't changed
+    const hash = entries.map(e => `${e.author}:${e.type}:${e.timestamp}`).join('|');
+    if (hash === lastDataHash) return;
+    lastDataHash = hash;
+
     updatePill(pill, counts);
     updatePanel(panel, entries, counts);
   } finally {
@@ -401,6 +417,8 @@ function cleanup() {
   if (pill) { pill.remove(); pill = null; }
   if (panel) { panel.remove(); panel = null; }
   isOpen = false;
+  lastDataHash = '';
+  hasAnimated = false;
 }
 
 // Close on outside click

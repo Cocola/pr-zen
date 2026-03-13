@@ -73,9 +73,8 @@
 }
 
 #przen-pill .przen-pill-icon {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
+  width: 30px;
+  height: 30px;
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -120,12 +119,12 @@
   pointer-events: auto;
 }
 
-/* When panel opens, stagger children */
-#przen-panel.przen-open .przen-header {
+/* Stagger only on first open, not on subsequent refreshes */
+#przen-panel.przen-animating .przen-header {
   animation: przen-header-in 0.2s ease both;
 }
 
-#przen-panel.przen-open .przen-item {
+#przen-panel.przen-animating .przen-item {
   animation: przen-item-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
