@@ -1,13 +1,49 @@
 /* ── PR Zen – Content Script Styles ── */
 
 :root {
-  --przen-human: #34d399;
-  --przen-bot: #94a3b8;
-  --przen-alert: #f87171;
-  --przen-bg: #1c1c1e;
-  --przen-text: #f5f5f7;
+  --przen-human: #16a34a;
+  --przen-bot: #64748b;
+  --przen-alert: #dc2626;
+  --przen-bg: #ffffff;
+  --przen-text: #1c1c1e;
   --przen-muted: #6b7280;
   --przen-highlight: #6366f1;
+  --przen-border: rgba(0, 0, 0, 0.08);
+  --przen-hover: rgba(0, 0, 0, 0.04);
+  --przen-active: rgba(0, 0, 0, 0.06);
+  --przen-timeline: rgba(0, 0, 0, 0.08);
+  --przen-scrollbar: rgba(0, 0, 0, 0.15);
+  --przen-scrollbar-hover: rgba(0, 0, 0, 0.25);
+  --przen-badge-bg: rgba(0, 0, 0, 0.06);
+  --przen-alert-bg: rgba(220, 38, 38, 0.06);
+  --przen-alert-bg-hover: rgba(220, 38, 38, 0.1);
+  --przen-shadow-sm: rgba(0, 0, 0, 0.06);
+  --przen-shadow-md: rgba(0, 0, 0, 0.12);
+  --przen-shadow-lg: rgba(0, 0, 0, 0.18);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --przen-human: #34d399;
+    --przen-bot: #94a3b8;
+    --przen-alert: #f87171;
+    --przen-bg: #1c1c1e;
+    --przen-text: #f5f5f7;
+    --przen-muted: #8b8d98;
+    --przen-highlight: #6366f1;
+    --przen-border: rgba(255, 255, 255, 0.06);
+    --przen-hover: rgba(255, 255, 255, 0.06);
+    --przen-active: rgba(255, 255, 255, 0.08);
+    --przen-timeline: rgba(255, 255, 255, 0.06);
+    --przen-scrollbar: rgba(255, 255, 255, 0.15);
+    --przen-scrollbar-hover: rgba(255, 255, 255, 0.25);
+    --przen-badge-bg: rgba(255, 255, 255, 0.08);
+    --przen-alert-bg: rgba(248, 113, 113, 0.06);
+    --przen-alert-bg-hover: rgba(248, 113, 113, 0.1);
+    --przen-shadow-sm: rgba(0, 0, 0, 0.12);
+    --przen-shadow-md: rgba(0, 0, 0, 0.24);
+    --przen-shadow-lg: rgba(0, 0, 0, 0.36);
+  }
 }
 
 /* ── Animations ── */
@@ -46,6 +82,8 @@
 /* ── Pill ── */
 
 #przen-pill {
+  appearance: none;
+  border: none;
   position: fixed;
   bottom: 24px;
   right: 24px;
@@ -53,11 +91,11 @@
   background: var(--przen-bg);
   color: var(--przen-text);
   border-radius: 24px;
-  padding: 8px 16px 8px 10px;
+  padding: 12px 20px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 13px;
   cursor: pointer;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 3px var(--przen-shadow-sm), 0 4px 24px var(--przen-shadow-md);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -69,14 +107,7 @@
 
 #przen-pill:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.32);
-}
-
-#przen-pill .przen-pill-icon {
-  width: 30px;
-  height: 30px;
-  object-fit: contain;
-  flex-shrink: 0;
+  box-shadow: 0 8px 32px var(--przen-shadow-lg);
 }
 
 #przen-pill .przen-stat {
@@ -98,10 +129,11 @@
   z-index: 99998;
   background: var(--przen-bg);
   color: var(--przen-text);
+  border: 1px solid var(--przen-border);
   border-radius: 16px;
   width: 380px;
   max-height: 480px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.36);
+  box-shadow: 0 1px 4px var(--przen-shadow-sm), 0 8px 40px var(--przen-shadow-lg);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 13px;
   display: flex;
@@ -132,6 +164,7 @@
 
 #przen-panel-list {
   overflow-y: auto;
+  overscroll-behavior: contain;
   max-height: 436px;
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
@@ -139,7 +172,7 @@
 }
 
 #przen-panel-list:hover {
-  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+  scrollbar-color: var(--przen-scrollbar) transparent;
 }
 
 #przen-panel-list::-webkit-scrollbar {
@@ -156,11 +189,11 @@
 }
 
 #przen-panel-list:hover::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--przen-scrollbar);
 }
 
 #przen-panel-list::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: var(--przen-scrollbar-hover);
 }
 
 /* ── Legend header ── */
@@ -170,7 +203,7 @@
   align-items: center;
   gap: 14px;
   padding: 10px 16px 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--przen-border);
   flex-shrink: 0;
 }
 
@@ -201,25 +234,58 @@
   height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .przen-item {
-  padding: 8px 16px;
+  padding: 10px 16px 10px 20px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  transition: background 0.15s ease, border-left-color 0.15s ease;
-  border-left: 3px solid transparent;
+  gap: 2px;
+  transition: background 0.15s ease;
+  position: relative;
+}
+
+/* Timeline vertical line */
+.przen-item::before {
+  content: '';
+  position: absolute;
+  left: 23px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--przen-timeline);
+}
+
+.przen-item:first-child::before {
+  top: 50%;
+}
+
+.przen-item:last-child::before {
+  bottom: 50%;
 }
 
 .przen-item:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--przen-hover);
 }
 
 .przen-item.przen-active {
-  background: rgba(255, 255, 255, 0.08);
-  border-left-color: var(--przen-highlight);
+  background: var(--przen-active);
+}
+
+.przen-item.przen-active .przen-dot {
+  box-shadow: 0 0 0 2px var(--przen-bg), 0 0 0 4px var(--przen-highlight);
+}
+
+/* Alert items get a subtle red tint */
+.przen-item-alert {
+  background: var(--przen-alert-bg);
+}
+
+.przen-item-alert:hover {
+  background: var(--przen-alert-bg-hover);
 }
 
 .przen-item-row {
@@ -228,9 +294,13 @@
   gap: 8px;
 }
 
-.przen-item-author {
+.przen-item-title {
   font-weight: 600;
   font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 }
 
 .przen-item-badge {
@@ -238,7 +308,7 @@
   font-weight: 600;
   padding: 1px 5px;
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--przen-badge-bg);
   color: var(--przen-muted);
   flex-shrink: 0;
 }
@@ -251,12 +321,12 @@
   margin-left: auto;
 }
 
-.przen-item-preview {
+.przen-item-secondary {
   color: var(--przen-muted);
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.4;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   padding-left: 16px;
@@ -265,14 +335,13 @@
 /* ── Highlight ── */
 
 .przen-highlight {
-  outline: 2px solid var(--przen-highlight);
+  outline: 2px solid var(--przen-highlight) !important;
   outline-offset: 2px;
-  border-radius: 6px;
-  transition: outline-color 2000ms ease;
+  transition: outline-color 2000ms ease !important;
 }
 
 .przen-highlight-fade {
-  outline-color: transparent;
+  outline-color: transparent !important;
 }
 
 /* ── Empty state ── */
@@ -282,4 +351,33 @@
   padding: 24px 16px;
   text-align: center;
   font-style: italic;
+}
+
+/* ── Focus visible ── */
+
+#przen-pill:focus-visible {
+  outline: 2px solid var(--przen-highlight);
+  outline-offset: 2px;
+}
+
+.przen-item:focus-visible {
+  outline: none;
+  background: var(--przen-active);
+}
+
+.przen-item:focus-visible .przen-dot {
+  box-shadow: 0 0 0 2px var(--przen-bg), 0 0 0 4px var(--przen-highlight);
+}
+
+/* ── Reduced motion ── */
+
+@media (prefers-reduced-motion: reduce) {
+  #przen-pill,
+  #przen-panel,
+  .przen-item,
+  .przen-header,
+  .przen-highlight {
+    animation: none !important;
+    transition: none !important;
+  }
 }

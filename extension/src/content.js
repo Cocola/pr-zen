@@ -16,10 +16,10 @@ const DEFAULT_CONFIG = {
 };
 
 const COLORS = {
-  human: '#34d399',
-  bot: '#94a3b8',
-  alert: '#f87171',
-  muted: '#6b7280',
+  human: 'var(--przen-human)',
+  bot: 'var(--przen-bot)',
+  alert: 'var(--przen-alert)',
+  muted: 'var(--przen-muted)',
 };
 
 const TYPE_LABELS = { human: 'Reviews', bot: 'Bots', alert: 'Alerts' };
@@ -179,7 +179,12 @@ function groupEntries(entries) {
 function createPill() {
   const pill = document.createElement('div');
   pill.id = 'przen-pill';
-  pill.title = 'PR Zen — Toggle navigator (Alt+Z)';
+  pill.setAttribute('role', 'button');
+  pill.setAttribute('tabindex', '0');
+  pill.setAttribute('aria-label', 'PR Zen — Toggle navigator (Alt+Z)');
+  pill.setAttribute('aria-expanded', 'false');
+  pill.setAttribute('aria-controls', 'przen-panel');
+  pill.setAttribute('aria-live', 'polite');
   document.body.appendChild(pill);
   return pill;
 }
@@ -187,27 +192,23 @@ function createPill() {
 function createPanel() {
   const panel = document.createElement('div');
   panel.id = 'przen-panel';
+  panel.setAttribute('role', 'dialog');
+  panel.setAttribute('aria-label', 'PR Zen navigator');
   document.body.appendChild(panel);
   return panel;
 }
 
 function updatePill(pill, counts) {
   const parts = [];
-  const iconUrl = chrome?.runtime?.getURL ? chrome.runtime.getURL('icons/icon-48.png') : '';
-  if (iconUrl) {
-    parts.push(`<img class="przen-pill-icon" src="${iconUrl}" alt="PR Zen">`);
-  } else {
-    parts.push('<span style="font-size:16px;line-height:1">🐙</span>');
-  }
   if (counts.human) {
     parts.push(`<span class="przen-stat" style="color:${COLORS.human}">${counts.human} review${counts.human > 1 ? 's' : ''}</span>`);
   }
   if (counts.bot) {
-    if (parts.length > 1) parts.push('<span class="przen-sep">&middot;</span>');
+    if (parts.length) parts.push('<span class="przen-sep">&middot;</span>');
     parts.push(`<span class="przen-stat" style="color:${COLORS.bot}">${counts.bot} bot${counts.bot > 1 ? 's' : ''}</span>`);
   }
   if (counts.alert) {
-    if (parts.length > 1) parts.push('<span class="przen-sep">&middot;</span>');
+    if (parts.length) parts.push('<span class="przen-sep">&middot;</span>');
     parts.push(`<span class="przen-stat" style="color:${COLORS.alert}">${counts.alert} alert${counts.alert > 1 ? 's' : ''}</span>`);
   }
   pill.innerHTML = parts.join('');
@@ -242,7 +243,10 @@ let itemIndex = 0;
 function renderItem(list, entry) {
   const color = COLORS[entry.type];
   const item = document.createElement('div');
-  item.className = 'przen-item';
+  item.className = `przen-item${entry.type === 'alert' ? ' przen-item-alert' : ''}`;
+  item.setAttribute('role', 'option');
+  item.setAttribute('tabindex', '-1');
+  item.setAttribute('aria-label', `${entry.type}: ${entry.title || entry.author} — ${entry.preview.slice(0, 60)}`);
   // Stagger delay: cap at 15 items (450ms max) so long lists don't feel slow
   const delay = Math.min(itemIndex, 15) * 30;
   item.style.animationDelay = `${delay}ms`;
@@ -257,10 +261,12 @@ function renderItem(list, entry) {
   dot.style.background = color;
   row.appendChild(dot);
 
-  const authorSpan = document.createElement('span');
-  authorSpan.className = 'przen-item-author';
-  authorSpan.textContent = entry.author;
-  row.appendChild(authorSpan);
+  // Title is the primary info (e.g. "Review Claude", "Vercel Preview")
+  const titleText = entry.title || entry.author;
+  const titleSpan = document.createElement('span');
+  titleSpan.className = 'przen-item-title';
+  titleSpan.textContent = titleText;
+  row.appendChild(titleSpan);
 
   if (entry.groupCount > 1) {
     const badge = document.createElement('span');
@@ -277,12 +283,17 @@ function renderItem(list, entry) {
     row.appendChild(timeSpan);
   }
 
-  const previewSpan = document.createElement('div');
-  previewSpan.className = 'przen-item-preview';
-  previewSpan.textContent = entry.preview;
+  // Secondary line: author (if title exists) or preview
+  const secondarySpan = document.createElement('div');
+  secondarySpan.className = 'przen-item-secondary';
+  if (entry.title) {
+    secondarySpan.textContent = entry.author;
+  } else {
+    secondarySpan.textContent = entry.preview;
+  }
 
   item.appendChild(row);
-  item.appendChild(previewSpan);
+  item.appendChild(secondarySpan);
 
   item.addEventListener('click', () => {
     setActiveItem(item);
@@ -299,6 +310,9 @@ function updatePanel(panel, entries, counts) {
 
   const list = document.createElement('div');
   list.id = 'przen-panel-list';
+  list.setAttribute('role', 'listbox');
+  list.setAttribute('aria-label', 'PR comments');
+  list.setAttribute('tabindex', '0');
 
   if (!entries.length) {
     const empty = document.createElement('div');
@@ -322,7 +336,15 @@ function setActiveItem(panelItem) {
   panelItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
+function clearHighlights() {
+  document.querySelectorAll('.przen-highlight, .przen-highlight-fade').forEach(el => {
+    el.classList.remove('przen-highlight', 'przen-highlight-fade');
+  });
+}
+
 function scrollToAndHighlight(el) {
+  clearHighlights();
+
   const top = el.getBoundingClientRect().top + window.scrollY - STICKY_HEADER_OFFSET;
   window.scrollTo({ top, behavior: 'smooth' });
 
@@ -354,21 +376,26 @@ let hasAnimated = false;
 function openPanel() {
   if (isOpen) return;
   isOpen = true;
+  if (pill) pill.setAttribute('aria-expanded', 'true');
   if (panel) {
     panel.classList.add('przen-open');
     if (!hasAnimated) {
       hasAnimated = true;
       panel.classList.add('przen-animating');
-      // Remove animating class after stagger completes to prevent re-trigger
       setTimeout(() => panel.classList.remove('przen-animating'), 600);
     }
+    // Focus the first item for keyboard nav
+    const firstItem = panel.querySelector('.przen-item');
+    if (firstItem) setTimeout(() => firstItem.focus(), 150);
   }
 }
 
 function closePanel() {
   if (!isOpen) return;
   isOpen = false;
+  if (pill) pill.setAttribute('aria-expanded', 'false');
   if (panel) panel.classList.remove('przen-open');
+  if (pill) pill.focus();
 }
 
 function togglePanel() {
@@ -435,6 +462,29 @@ document.addEventListener('keydown', (e) => {
     if (pill && pill.style.display !== 'none') togglePanel();
   }
   if (e.key === 'Escape' && isOpen) closePanel();
+
+  // Arrow key navigation within panel
+  if (!isOpen || !panel) return;
+  if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'Enter') return;
+
+  const items = [...panel.querySelectorAll('.przen-item')];
+  if (!items.length) return;
+
+  const focused = document.activeElement;
+  const idx = items.indexOf(focused);
+
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    const next = idx < items.length - 1 ? idx + 1 : 0;
+    items[next].focus();
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    const prev = idx > 0 ? idx - 1 : items.length - 1;
+    items[prev].focus();
+  } else if (e.key === 'Enter' && idx >= 0) {
+    e.preventDefault();
+    items[idx].click();
+  }
 });
 
 // MutationObserver for GitHub SPA
