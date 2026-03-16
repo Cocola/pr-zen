@@ -26,6 +26,11 @@ Modern GitHub PRs accumulate dozens of bot comments — CI, SonarCloud, Codecov,
 
 PR Zen doesn't hide anything. It gives you a **bird's-eye view** of the entire PR conversation.
 
+This is a long-standing pain point in the GitHub community:
+- [Allow to mute bots](https://github.com/orgs/community/discussions/5793) — bot noise drowns real notifications
+- [No way to easily view unresolved conversations](https://github.com/orgs/community/discussions/7638) — conversations get lost in long PRs
+- [Hide or Collapse Issue History](https://github.com/orgs/community/discussions/163209) — feature request to collapse non-comments
+
 ## Install
 
 ### Chrome Extension (recommended)
