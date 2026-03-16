@@ -8,6 +8,7 @@ const DEFAULT_CONFIG = {
   botPatterns: [
     '[bot]', 'github-actions', 'dependabot', 'codecov', 'sonarcloud',
     'vercel', 'netlify', 'renovate', 'claude-code-review', 'copilot',
+    'coderabbit', 'gemini-code-assist', 'codeclimate', 'snyk',
   ],
   alertKeywords: [
     'failed', 'error', 'decreased', 'below threshold',
@@ -49,6 +50,7 @@ if (chrome?.storage?.onChanged) {
     for (const [key, { newValue }] of Object.entries(changes)) {
       if (key in config) config[key] = newValue;
     }
+    lastDataHash = ''; // Force rebuild on config change
     if (changes.enabled) {
       changes.enabled.newValue ? refresh() : cleanup();
     } else {
@@ -103,20 +105,25 @@ function classifyComments() {
 
   timelineItems.forEach(wrapper => {
     const item = wrapper.querySelector('.timeline-comment') ||
-                 wrapper.querySelector('.TimelineItem');
-    if (!item || seen.has(item)) return;
-    seen.add(item);
+                 wrapper.querySelector('.TimelineItem') ||
+                 wrapper;
+    if (seen.has(item)) return;
 
     const authorEl = item.querySelector('.author, [data-hovercard-type="user"]');
     if (!authorEl) return;
 
     const body = item.querySelector('.comment-body, .markdown-body');
     const rawText = body ? body.textContent.trim().replace(/\s+/g, ' ') : '';
-    if (!rawText) return;
 
     const author = authorEl.textContent.trim();
     const title = extractTitle(item);
-    const preview = title || rawText.slice(0, 120);
+    const preview = title || rawText.slice(0, 120) || 'Review';
+
+    // Skip items with no useful content (commits, etc.) unless they're from a bot
+    const botDetected = isBot(authorEl);
+    if (!rawText && !botDetected) return;
+
+    seen.add(item);
 
     const timeEl = item.querySelector('relative-time, time');
     const timestamp = timeEl
@@ -368,6 +375,7 @@ function scrollToAndHighlight(el) {
 
 let pill = null;
 let panel = null;
+let wasOffConversation = false;
 let isOpen = false;
 let isRefreshing = false;
 let lastDataHash = '';
@@ -402,19 +410,55 @@ function togglePanel() {
   isOpen ? closePanel() : openPanel();
 }
 
+function isConversationTab() {
+  // URL-based detection is more reliable than DOM selectors
+  const path = location.pathname;
+  if (/\/pull\/\d+\/(commits|files|checks|changes)/.test(path)) return false;
+  return true;
+}
+
 function refresh() {
   if (isRefreshing || !config.enabled) return;
   isRefreshing = true;
 
   try {
-    const { entries, counts } = classifyComments();
-    const totalBots = counts.bot + counts.alert;
-
-    if (totalBots < config.minBotComments) {
+    const onConversation = isConversationTab();
+    if (!onConversation) {
       if (pill) pill.style.display = 'none';
       if (panel) panel.classList.remove('przen-open');
+      isOpen = false;
+      wasOffConversation = true;
       return;
     }
+    if (wasOffConversation) {
+      lastDataHash = ''; // Force rebuild — DOM refs are stale after tab switch
+      wasOffConversation = false;
+    }
+
+    const { entries, counts } = classifyComments();
+    const total = counts.human + counts.bot + counts.alert;
+    const totalBots = counts.bot + counts.alert;
+
+    // Still loading — show spinner only if pill already exists
+    if (total === 0) {
+      if (pill) {
+        pill.classList.add('przen-pill-muted');
+        pill.innerHTML = '<span class="przen-spinner"></span>';
+      }
+      return;
+    }
+
+    if (totalBots < config.minBotComments) {
+      if (pill) {
+        pill.style.display = 'none';
+        pill.classList.remove('przen-pill-muted');
+      }
+      if (panel) panel.classList.remove('przen-open');
+      isOpen = false;
+      return;
+    }
+
+    if (pill) pill.classList.remove('przen-pill-muted');
 
     if (!pill) {
       pill = createPill();
@@ -457,7 +501,7 @@ document.addEventListener('mousedown', (e) => {
 
 // Keyboard shortcuts
 document.addEventListener('keydown', (e) => {
-  if (e.altKey && e.key === 'z') {
+  if (e.altKey && (e.code === 'KeyZ' || e.code === 'KeyW')) {
     e.preventDefault();
     if (pill && pill.style.display !== 'none') togglePanel();
   }
