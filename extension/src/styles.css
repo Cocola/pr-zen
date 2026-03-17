@@ -49,6 +49,16 @@
   to { transform: rotate(360deg); }
 }
 
+@keyframes przen-pulse {
+  0% { opacity: 1; }
+  30% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+#przen-pill.przen-pill-pulse {
+  animation: przen-pulse 0.8s ease;
+}
+
 /* ── Animations ── */
 
 @keyframes przen-pill-in {
