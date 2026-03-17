@@ -64,7 +64,7 @@ Install from the [Chrome Web Store](https://chrome.google.com/webstore/detail/cn
 
 **Click to navigate** — click any item to smooth-scroll to that comment, with a temporary highlight.
 
-**Light & dark mode** — adapts to your system theme via `prefers-color-scheme`.
+**Theme-aware** — uses GitHub's own CSS variables to match all 7 themes (light, dark, soft dark, protanopia, tritanopia).
 
 **Accessible** — WCAG AA: full keyboard navigation, ARIA roles, focus management, `prefers-reduced-motion` support.
 
