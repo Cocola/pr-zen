@@ -1,20 +1,21 @@
 /* ── PR Zen – Content Script Styles ── */
 
+/* GitHub theme-aware variables with hardcoded fallbacks */
 :root {
-  --przen-human: #16a34a;
-  --przen-bot: #64748b;
-  --przen-alert: #dc2626;
-  --przen-bg: #ffffff;
-  --przen-text: #1c1c1e;
-  --przen-muted: #6b7280;
+  --przen-bg: var(--bgColor-muted, var(--color-canvas-subtle, #ffffff));
+  --przen-text: var(--fgColor-default, var(--color-fg-default, #1c1c1e));
+  --przen-muted: var(--fgColor-muted, var(--color-fg-muted, #6b7280));
+  --przen-border: var(--borderColor-default, var(--color-border-default, rgba(0, 0, 0, 0.08)));
   --przen-highlight: #6366f1;
-  --przen-border: rgba(0, 0, 0, 0.08);
-  --przen-hover: rgba(0, 0, 0, 0.04);
-  --przen-active: rgba(0, 0, 0, 0.06);
-  --przen-timeline: rgba(0, 0, 0, 0.08);
-  --przen-scrollbar: rgba(0, 0, 0, 0.15);
-  --przen-scrollbar-hover: rgba(0, 0, 0, 0.25);
-  --przen-badge-bg: rgba(0, 0, 0, 0.06);
+  --przen-human: var(--fgColor-success, var(--color-success-fg, #16a34a));
+  --przen-bot: var(--fgColor-muted, var(--color-fg-muted, #64748b));
+  --przen-alert: var(--fgColor-danger, var(--color-danger-fg, #dc2626));
+  --przen-hover: var(--bgColor-neutral-muted, var(--color-neutral-muted, rgba(0, 0, 0, 0.04)));
+  --przen-active: var(--bgColor-accent-muted, var(--color-accent-muted, rgba(0, 0, 0, 0.06)));
+  --przen-timeline: var(--borderColor-muted, var(--color-border-muted, rgba(0, 0, 0, 0.08)));
+  --przen-scrollbar: var(--fgColor-muted, var(--color-fg-muted, rgba(0, 0, 0, 0.15)));
+  --przen-scrollbar-hover: var(--fgColor-default, var(--color-fg-default, rgba(0, 0, 0, 0.25)));
+  --przen-badge-bg: var(--bgColor-neutral-muted, var(--color-neutral-muted, rgba(0, 0, 0, 0.06)));
   --przen-alert-bg: rgba(220, 38, 38, 0.06);
   --przen-alert-bg-hover: rgba(220, 38, 38, 0.1);
   --przen-shadow-sm: rgba(0, 0, 0, 0.06);
@@ -22,27 +23,14 @@
   --przen-shadow-lg: rgba(0, 0, 0, 0.18);
 }
 
+/* Dark mode fallback if GitHub vars are not available */
 @media (prefers-color-scheme: dark) {
   :root {
-    --przen-human: #34d399;
-    --przen-bot: #94a3b8;
-    --przen-alert: #f87171;
-    --przen-bg: #1c1c1e;
-    --przen-text: #f5f5f7;
-    --przen-muted: #8b8d98;
-    --przen-highlight: #6366f1;
-    --przen-border: rgba(255, 255, 255, 0.06);
-    --przen-hover: rgba(255, 255, 255, 0.06);
-    --przen-active: rgba(255, 255, 255, 0.08);
-    --przen-timeline: rgba(255, 255, 255, 0.06);
-    --przen-scrollbar: rgba(255, 255, 255, 0.15);
-    --przen-scrollbar-hover: rgba(255, 255, 255, 0.25);
-    --przen-badge-bg: rgba(255, 255, 255, 0.08);
-    --przen-alert-bg: rgba(248, 113, 113, 0.06);
-    --przen-alert-bg-hover: rgba(248, 113, 113, 0.1);
     --przen-shadow-sm: rgba(0, 0, 0, 0.12);
     --przen-shadow-md: rgba(0, 0, 0, 0.24);
     --przen-shadow-lg: rgba(0, 0, 0, 0.36);
+    --przen-alert-bg: rgba(248, 113, 113, 0.06);
+    --przen-alert-bg-hover: rgba(248, 113, 113, 0.1);
   }
 }
 
