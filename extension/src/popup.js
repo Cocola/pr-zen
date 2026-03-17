@@ -50,4 +50,5 @@ $('alertKeywords').addEventListener('change', (e) => {
   save('alertKeywords', parseLines(e.target.value));
 });
 
+$('version').textContent = `v${chrome.runtime.getManifest().version}`;
 load();

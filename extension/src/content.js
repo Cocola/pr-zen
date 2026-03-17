@@ -77,8 +77,20 @@ function isBot(authorEl) {
 function isAlert(commentEl) {
   const body = commentEl.querySelector('.comment-body, .markdown-body');
   if (!body) return false;
-  const text = body.textContent.toLowerCase();
-  return config.alertKeywords.some(kw => text.includes(kw));
+
+  // Check headings and bold text first (high signal)
+  const headings = body.querySelectorAll('h1, h2, h3, strong, b');
+  const headingText = [...headings].map(h => h.textContent.toLowerCase()).join(' ');
+  if (config.alertKeywords.some(kw => headingText.includes(kw))) return true;
+
+  // Check first paragraph only (summary area, avoids matching code snippets)
+  const firstP = body.querySelector('p');
+  if (firstP) {
+    const pText = firstP.textContent.toLowerCase();
+    if (config.alertKeywords.some(kw => pText.includes(kw))) return true;
+  }
+
+  return false;
 }
 
 function extractTitle(item) {
@@ -475,10 +487,17 @@ function refresh() {
     // Skip rebuild if data hasn't changed
     const hash = entries.map(e => `${e.author}:${e.type}:${e.timestamp}`).join('|');
     if (hash === lastDataHash) return;
+    const isUpdate = lastDataHash !== '';
     lastDataHash = hash;
 
     updatePill(pill, counts);
     updatePanel(panel, entries, counts);
+    if (isUpdate) {
+      requestAnimationFrame(() => {
+        pill.classList.add('przen-pill-pulse');
+        setTimeout(() => pill.classList.remove('przen-pill-pulse'), 800);
+      });
+    }
   } finally {
     isRefreshing = false;
   }
