@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         PR Zen
 // @namespace    https://github.com/pr-zen
-// @version      0.2.0
+// @version      0.2.1
 // @description  Floating navigator for noisy GitHub Pull Requests 🐙🧘
 // @author       PR Zen
 // @match        https://github.com/*/*/pull/*
@@ -183,6 +183,7 @@
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
         font-size: 13px;
         cursor: pointer;
+        border: 1px solid rgba(255,255,255,0.08);
         box-shadow: 0 4px 24px rgba(0,0,0,0.24);
         display: flex;
         align-items: center;

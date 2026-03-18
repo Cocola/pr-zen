@@ -96,7 +96,7 @@
 
 #przen-pill {
   appearance: none;
-  border: none;
+  border: 1px solid var(--przen-border);
   position: fixed;
   bottom: 24px;
   right: 24px;
