@@ -17,7 +17,7 @@
 
 ## The Problem
 
-Modern GitHub PRs accumulate dozens of bot comments — CI, SonarCloud, Codecov, Vercel previews, code review bots — that are **useful and should be read**, but:
+Modern GitHub PRs accumulate dozens of bot comments — CI, SonarCloud, Codecov, Vercel previews, and now AI code reviewers (Copilot, CodeRabbit, Claude…) — that are **useful and should be read**, but:
 
 - Too much scrolling to navigate between items
 - No overview of the timeline
@@ -85,7 +85,7 @@ PR Zen is a Chrome extension (Manifest V3) with zero dependencies. It:
 
 ### Bot detection
 
-Pattern matching on username: `[bot]`, `github-actions`, `dependabot`, `codecov`, `sonarcloud`, `vercel`, `netlify`, `renovate`, `claude-code-review`, `copilot`.
+Pattern matching on username: `[bot]`, `github-actions`, `dependabot`, `codecov`, `sonarcloud`, `vercel`, `netlify`, `renovate`, `claude-code-review`, `copilot`, `coderabbit`, `gemini-code-assist`, `codeclimate`, `snyk`, `bors`, `rustbot`, `k8s-ci-robot`, `typescript-bot`, and more. Fully customizable from the extension popup.
 
 ### Alert detection
 
