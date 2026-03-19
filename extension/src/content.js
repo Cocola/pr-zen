@@ -11,7 +11,7 @@ const DEFAULT_CONFIG = {
     'coderabbit', 'gemini-code-assist', 'codeclimate', 'snyk',
     'bors', 'rustbot', 'rust-timer', 'rust-log-analyzer', 'triagebot',
     'k8s-ci-robot', 'k8s-triage-robot', 'fejta-bot', 'typescript-bot',
-    'stale', 'libc-bot', 'rust-highfive', 'chromium-wpt-export-bot',
+    'libc-bot', 'rust-highfive', 'chromium-wpt-export-bot',
   ],
   alertKeywords: [
     'failed', 'error', 'decreased', 'below threshold',
