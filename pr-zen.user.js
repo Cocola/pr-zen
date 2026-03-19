@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         PR Zen
 // @namespace    https://github.com/pr-zen
-// @version      0.2.0
+// @version      0.2.1
 // @description  Floating navigator for noisy GitHub Pull Requests 🐙🧘
 // @author       PR Zen
 // @match        https://github.com/*/*/pull/*
@@ -17,7 +17,13 @@
   const BOT_PATTERNS = [
     '[bot]', 'github-actions', 'dependabot', 'codecov', 'sonarcloud',
     'vercel', 'netlify', 'renovate', 'claude-code-review', 'copilot',
+    'coderabbit', 'gemini-code-assist', 'codeclimate', 'snyk',
+    'bors', 'rustbot', 'rust-timer', 'rust-log-analyzer', 'triagebot',
+    'k8s-ci-robot', 'k8s-triage-robot', 'fejta-bot', 'typescript-bot',
+    'libc-bot', 'rust-highfive', 'chromium-wpt-export-bot',
   ];
+
+  const BORDER_COLOR = 'rgba(255,255,255,0.06)';
 
   const ALERT_KEYWORDS = [
     'failed', 'error', 'decreased', 'below threshold',
@@ -183,6 +189,7 @@
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
         font-size: 13px;
         cursor: pointer;
+        border: 1px solid ${BORDER_COLOR};
         box-shadow: 0 4px 24px rgba(0,0,0,0.24);
         display: flex;
         align-items: center;
