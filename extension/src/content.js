@@ -9,6 +9,9 @@ const DEFAULT_CONFIG = {
     '[bot]', 'github-actions', 'dependabot', 'codecov', 'sonarcloud',
     'vercel', 'netlify', 'renovate', 'claude-code-review', 'copilot',
     'coderabbit', 'gemini-code-assist', 'codeclimate', 'snyk',
+    'bors', 'rustbot', 'rust-timer', 'rust-log-analyzer', 'triagebot',
+    'k8s-ci-robot', 'k8s-triage-robot', 'fejta-bot', 'typescript-bot',
+    'stale', 'libc-bot', 'rust-highfive', 'chromium-wpt-export-bot',
   ],
   alertKeywords: [
     'failed', 'error', 'decreased', 'below threshold',
