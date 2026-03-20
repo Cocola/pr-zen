@@ -221,19 +221,28 @@ function createPanel() {
 }
 
 function updatePill(pill, counts) {
-  const parts = [];
-  if (counts.human) {
-    parts.push(`<span class="przen-stat" style="color:${COLORS.human}">${counts.human} review${counts.human > 1 ? 's' : ''}</span>`);
+  pill.textContent = '';
+  const entries = [
+    { count: counts.human, color: COLORS.human, label: 'review' },
+    { count: counts.bot, color: COLORS.bot, label: 'bot' },
+    { count: counts.alert, color: COLORS.alert, label: 'alert' },
+  ];
+  let first = true;
+  for (const { count, color, label } of entries) {
+    if (!count) continue;
+    if (!first) {
+      const sep = document.createElement('span');
+      sep.className = 'przen-sep';
+      sep.textContent = '\u00b7';
+      pill.appendChild(sep);
+    }
+    const stat = document.createElement('span');
+    stat.className = 'przen-stat';
+    stat.style.color = color;
+    stat.textContent = `${count} ${label}${count > 1 ? 's' : ''}`;
+    pill.appendChild(stat);
+    first = false;
   }
-  if (counts.bot) {
-    if (parts.length) parts.push('<span class="przen-sep">&middot;</span>');
-    parts.push(`<span class="przen-stat" style="color:${COLORS.bot}">${counts.bot} bot${counts.bot > 1 ? 's' : ''}</span>`);
-  }
-  if (counts.alert) {
-    if (parts.length) parts.push('<span class="przen-sep">&middot;</span>');
-    parts.push(`<span class="przen-stat" style="color:${COLORS.alert}">${counts.alert} alert${counts.alert > 1 ? 's' : ''}</span>`);
-  }
-  pill.innerHTML = parts.join('');
 }
 
 function renderHeader(panel, counts) {
@@ -250,7 +259,11 @@ function renderHeader(panel, counts) {
     dot.style.background = COLORS[type];
 
     const text = document.createElement('span');
-    text.innerHTML = `<span class="przen-legend-count">${counts[type]}</span> ${label}`;
+    const countSpan = document.createElement('span');
+    countSpan.className = 'przen-legend-count';
+    countSpan.textContent = counts[type];
+    text.appendChild(countSpan);
+    text.appendChild(document.createTextNode(` ${label}`));
 
     item.appendChild(dot);
     item.appendChild(text);
