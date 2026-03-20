@@ -30,5 +30,14 @@
       "resources": ["icons/icon-48.png"],
       "matches": ["https://github.com/*"]
     }
-  ]
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{5c59b8d0-f473-4787-acff-7f3eb7fe94de}",
+      "strict_min_version": "58.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  }
 }
