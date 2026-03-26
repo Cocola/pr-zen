@@ -1,0 +1,79 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  icon: string;
+}
+
+const { title, description, icon } = Astro.props;
+---
+
+<div class="feature-card spotlight-card">
+  <div class="feature-card-inner">
+    <div class="feature-icon" set:html={icon} />
+    <h3 class="feature-title">{title}</h3>
+    <p class="feature-desc">{description}</p>
+  </div>
+</div>
+
+<style>
+  /* Outer: 1px "border" via padding + bg, gradient on hover */
+  .feature-card {
+    position: relative;
+    padding: 1px;
+    border-radius: var(--radius-md);
+    background: var(--color-border);
+    overflow: hidden;
+  }
+
+  /* Gradient glow: fades in on hover, clipped to outer bounds */
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      var(--color-accent) 0%,
+      transparent 40%
+    );
+    opacity: 0;
+    transition: opacity var(--duration-normal) var(--ease-out);
+    pointer-events: none;
+  }
+
+  .feature-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Inner: solid bg, covers everything except the 1px "border" */
+  .feature-card-inner {
+    position: relative;
+    padding: var(--space-xl);
+    border-radius: calc(var(--radius-md) - 1px);
+    background: var(--color-bg-elevated);
+    height: 100%;
+  }
+
+  .feature-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-subtle);
+    color: var(--color-accent);
+    margin-bottom: var(--space-md);
+  }
+
+  .feature-title {
+    margin-bottom: var(--space-xs);
+    color: var(--color-text);
+  }
+
+  .feature-desc {
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+  }
+</style>

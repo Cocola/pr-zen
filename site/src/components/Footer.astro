@@ -1,0 +1,66 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span class="footer-brand">PR Zen</span>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="https://github.com/Cocola/pr-zen/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a>
+      <a href="https://github.com/Cocola/pr-zen/blob/main/PRIVACY.md" target="_blank" rel="noopener noreferrer">Privacy</a>
+      <a href="https://github.com/Cocola/pr-zen" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </nav>
+    <span class="footer-copy">&copy; {year}</span>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding: var(--space-xl) 0;
+    border-top: 1px solid var(--color-border-subtle);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-md) var(--space-xl);
+    font-size: 0.8125rem;
+    color: var(--color-text-tertiary);
+  }
+
+  .footer-brand {
+    font-weight: 600;
+    color: var(--color-text-secondary);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: var(--space-lg);
+  }
+
+  .footer-links a {
+    color: var(--color-text-tertiary);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .footer-links a:hover {
+    color: var(--color-text-secondary);
+  }
+
+  .footer-copy {
+    margin-left: auto;
+  }
+
+  @media (max-width: 639px) {
+    .footer-inner {
+      justify-content: center;
+      text-align: center;
+    }
+
+    .footer-copy {
+      margin-left: 0;
+      width: 100%;
+    }
+  }
+</style>
