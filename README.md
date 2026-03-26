@@ -10,7 +10,15 @@
 </p>
 
 <p align="center">
-  <a href="#install">Install</a> · <a href="#features">Features</a> · <a href="#how-it-works">How it works</a> · <a href="#keyboard-shortcuts">Shortcuts</a> · <a href="#privacy">Privacy</a>
+  <a href="https://github.com/Cocola/pr-zen/releases"><img src="https://img.shields.io/github/v/release/Cocola/pr-zen?label=version&color=34d399" alt="Version"></a>
+  <a href="https://github.com/Cocola/pr-zen/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Cocola/pr-zen?color=34d399" alt="License"></a>
+  <a href="https://chromewebstore.google.com/detail/pr-zen/cngllfifbbjllfeloceeiihafomekdee"><img src="https://img.shields.io/chrome-web-store/users/cngllfifbbjllfeloceeiihafomekdee?label=chrome%20users&color=34d399" alt="Chrome Users"></a>
+  <a href="https://addons.mozilla.org/en-US/firefox/addon/pr-zen/"><img src="https://img.shields.io/amo/users/pr-zen?label=firefox%20users&color=34d399" alt="Firefox Users"></a>
+  <a href="https://cocola.github.io/pr-zen"><img src="https://img.shields.io/badge/website-cocola.github.io/pr--zen-34d399" alt="Website"></a>
+</p>
+
+<p align="center">
+  <a href="https://cocola.github.io/pr-zen">Website</a> · <a href="#install">Install</a> · <a href="#features">Features</a> · <a href="#how-it-works">How it works</a> · <a href="#keyboard-shortcuts">Shortcuts</a> · <a href="#privacy">Privacy</a>
 </p>
 
 ---
