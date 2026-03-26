@@ -12,9 +12,9 @@ Thumbs.db
 .env
 .env.*
 
-# Node (if added later)
+# Node
 node_modules/
-package-lock.json
+/package-lock.json
 
 # Build artifacts
 *.zip
@@ -23,6 +23,10 @@ package-lock.json
 
 # Claude Code
 CLAUDE.md
+
+# Site build
+site/dist/
+site/.astro/
 
 # Logs
 *.log

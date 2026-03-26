@@ -1,0 +1,84 @@
+---
+import FeatureCard from './FeatureCard.astro';
+
+const features = [
+  {
+    title: 'Floating pill',
+    description: 'Live stats appear only when needed. See reviews, bots, and alerts at a glance — without scrolling.',
+    icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="8" y2="12.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="16" y1="12" x2="16" y2="12.01"/></svg>',
+  },
+  {
+    title: 'Timeline navigator',
+    description: 'Color-coded timeline: green for human reviews, gray for bots, red for alerts. Click any entry to scroll there.',
+    icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="4"/><circle cx="12" cy="7" r="3"/><circle cx="12" cy="17" r="3"/></svg>',
+  },
+  {
+    title: 'Smart grouping',
+    description: 'Consecutive identical bot reports collapse into one entry with a count badge. Less noise, same information.',
+    icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>',
+  },
+  {
+    title: 'Keyboard-first',
+    description: 'Alt+Z to toggle, arrow keys to navigate, Enter to scroll, Escape to close. No mouse required.',
+    icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M8 16h8"/></svg>',
+  },
+  {
+    title: 'Theme-aware',
+    description: 'Matches all 7 GitHub themes seamlessly — light, dark, dimmed, and accessibility modes included.',
+    icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0 0 20V2z"/></svg>',
+  },
+  {
+    title: 'Private & lightweight',
+    description: 'Zero dependencies, no data collection, no network requests. Runs entirely in your browser.',
+    icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+  },
+];
+---
+
+<section id="features">
+  <div class="container">
+    <div class="features-header animate-on-scroll">
+      <h2>Built for senior reviewers</h2>
+      <p>Every feature earns its place. No bloat, no setup, no permissions beyond what's needed.</p>
+    </div>
+    <div class="features-grid">
+      {features.map((f, i) => (
+        <div class="animate-on-scroll" style={`transition-delay: ${i * 60}ms`}>
+          <FeatureCard title={f.title} description={f.description} icon={f.icon} />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .features-header {
+    max-width: 480px;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .features-header p {
+    margin-top: var(--space-sm);
+    margin-bottom: var(--space-xl);
+    font-size: 1.0625rem;
+    color: var(--color-text-secondary);
+  }
+
+  .features-grid {
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 640px) {
+    .features-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .features-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

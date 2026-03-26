@@ -1,0 +1,221 @@
+---
+---
+
+<section class="demo" id="demo">
+  <div class="container">
+    <div class="demo-cta-glow spotlight-card">
+      <button class="demo-cta" id="demo-cta" type="button">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Watch the 30-second demo
+      </button>
+    </div>
+  </div>
+
+  <!-- Lightbox (inside section for scoped styles) -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Video demo" hidden>
+    <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Close video">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="lightbox-video" id="lightbox-video"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const cta = document.getElementById('demo-cta')!;
+  const lightbox = document.getElementById('lightbox')!;
+  const backdrop = document.getElementById('lightbox-backdrop')!;
+  const closeBtn = document.getElementById('lightbox-close')!;
+  const videoContainer = document.getElementById('lightbox-video')!;
+
+  function openLightbox() {
+    lightbox.hidden = false;
+    // Trigger reflow then add class for animation
+    lightbox.offsetHeight;
+    lightbox.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+
+    if (!videoContainer.querySelector('iframe')) {
+      const iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube-nocookie.com/embed/CU7SMFjj_1c?autoplay=1&rel=0';
+      iframe.title = 'PR Zen demo';
+      iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.style.cssText = 'width:100%;height:100%;border:none;';
+      videoContainer.appendChild(iframe);
+    }
+
+    closeBtn.focus();
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('is-open');
+    // Wait for exit animation before hiding
+    setTimeout(() => {
+      lightbox.hidden = true;
+      document.body.style.overflow = '';
+      const iframe = videoContainer.querySelector('iframe');
+      if (iframe) iframe.remove();
+      cta.focus();
+    }, 200);
+  }
+
+  cta.addEventListener('click', openLightbox);
+  backdrop.addEventListener('click', closeLightbox);
+  closeBtn.addEventListener('click', closeLightbox);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !lightbox.hidden) {
+      closeLightbox();
+    }
+  });
+</script>
+
+<style>
+  .demo {
+    padding-top: 0;
+    padding-bottom: var(--space-2xl);
+    text-align: center;
+  }
+
+  @media (min-width: 1024px) {
+    .demo {
+      padding-bottom: var(--space-3xl);
+    }
+  }
+
+  .demo-cta-glow {
+    display: inline-flex;
+    position: relative;
+    padding: 1px;
+    border-radius: var(--radius-full);
+    background: var(--color-border);
+    overflow: hidden;
+  }
+
+  .demo-cta-glow::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      150px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      var(--color-accent) 0%,
+      transparent 45%
+    );
+    opacity: 0;
+    transition: opacity var(--duration-normal) var(--ease-out);
+    pointer-events: none;
+  }
+
+  .demo-cta-glow:hover::before {
+    opacity: 1;
+  }
+
+  .demo-cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 0.625rem 1.25rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    background: var(--color-bg-elevated);
+    border: none;
+    border-radius: calc(var(--radius-full) - 1px);
+    cursor: pointer;
+    transition: all var(--duration-fast) var(--ease-out);
+  }
+
+
+  .demo-cta svg {
+    color: var(--color-accent);
+  }
+
+  .demo-cta:hover {
+    color: var(--color-text);
+  }
+
+  .demo-cta-glow:hover {
+    transform: translateY(-1px);
+  }
+
+  /* ===== Lightbox ===== */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xl);
+  }
+
+  .lightbox[hidden] {
+    display: none;
+  }
+
+  .lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 250ms var(--ease-out);
+  }
+
+  .lightbox.is-open .lightbox-backdrop {
+    opacity: 1;
+  }
+
+  .lightbox-content {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+    z-index: 1;
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+    transition: opacity 250ms var(--ease-out),
+                transform 250ms var(--ease-out);
+  }
+
+  .lightbox.is-open .lightbox-content {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: -48px;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-sm);
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: all var(--duration-fast) var(--ease-out);
+  }
+
+  .lightbox-close:hover {
+    color: white;
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .lightbox-video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+  }
+</style>

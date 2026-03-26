@@ -1,0 +1,247 @@
+---
+---
+
+<section id="install" class="install-section">
+  <div class="container install-inner">
+    <div class="install-content animate-on-scroll">
+      <h2>Get PR Zen</h2>
+      <p>Free, open-source, installs in seconds.</p>
+      <span class="version-badge">v1.3.0</span>
+    </div>
+
+    <div class="install-options">
+      <div class="install-card-border install-card-border-primary spotlight-card" id="install-border-primary">
+        <a
+          id="install-cta-primary"
+          href="https://chromewebstore.google.com/detail/pr-zen/cngllfifbbjllfeloceeiihafomekdee"
+          class="install-card install-card-primary"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg class="install-icon" id="install-icon-chrome" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/>
+            <line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/>
+          </svg>
+          <svg class="install-icon" id="install-icon-firefox" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M17.5 8.5c-.5-2-2.5-3-4.5-3-3 0-5.5 2.5-5.5 5.5s2.5 5.5 5.5 5.5c2.5 0 4.5-1.5 5.2-3.5"/><path d="M15 6.5c1 .5 2 1.5 2.5 3"/>
+          </svg>
+          <div>
+            <span class="install-card-title" id="install-cta-title">Install for Chrome</span>
+            <span class="install-card-sub" id="install-cta-sub">Chrome Web Store</span>
+          </div>
+          <svg class="install-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="install-card-border spotlight-card" id="install-border-secondary">
+        <a
+          id="install-cta-secondary"
+          href="https://addons.mozilla.org/en-US/firefox/addon/pr-zen/"
+          class="install-card"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg class="install-icon" id="install-icon-alt-firefox" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M17.5 8.5c-.5-2-2.5-3-4.5-3-3 0-5.5 2.5-5.5 5.5s2.5 5.5 5.5 5.5c2.5 0 4.5-1.5 5.2-3.5"/><path d="M15 6.5c1 .5 2 1.5 2.5 3"/>
+          </svg>
+          <svg class="install-icon" id="install-icon-alt-chrome" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none">
+            <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/>
+            <line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/>
+          </svg>
+          <div>
+            <span class="install-card-title" id="install-alt-title">Also on Firefox</span>
+            <span class="install-card-sub" id="install-alt-sub">Firefox Add-ons</span>
+          </div>
+          <svg class="install-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+    </div>
+
+      <a
+        href="https://github.com/Cocola/pr-zen/blob/main/pr-zen.user.js"
+        class="install-link"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Or use the Tampermonkey userscript
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+      </a>
+  </div>
+</section>
+
+<script>
+  // Browser detection for install section
+  const isFirefox = navigator.userAgent.includes('Firefox');
+
+  if (isFirefox) {
+    // Swap primary to Firefox
+    const primaryLink = document.getElementById('install-cta-primary') as HTMLAnchorElement;
+    primaryLink.href = 'https://addons.mozilla.org/en-US/firefox/addon/pr-zen/';
+    document.getElementById('install-cta-title')!.textContent = 'Install for Firefox';
+    document.getElementById('install-cta-sub')!.textContent = 'Firefox Add-ons';
+    document.getElementById('install-icon-chrome')!.style.display = 'none';
+    document.getElementById('install-icon-firefox')!.style.display = '';
+
+    // Swap secondary to Chrome
+    const secondaryLink = document.getElementById('install-cta-secondary') as HTMLAnchorElement;
+    secondaryLink.href = 'https://chromewebstore.google.com/detail/pr-zen/cngllfifbbjllfeloceeiihafomekdee';
+    document.getElementById('install-alt-title')!.textContent = 'Also on Chrome';
+    document.getElementById('install-alt-sub')!.textContent = 'Chrome Web Store';
+    document.getElementById('install-icon-alt-firefox')!.style.display = 'none';
+    document.getElementById('install-icon-alt-chrome')!.style.display = '';
+  }
+</script>
+
+<style>
+  .install-section {
+    background: var(--color-bg-subtle);
+    border-top: 1px solid var(--color-border-subtle);
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+
+  .install-inner {
+    display: grid;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  @media (min-width: 1024px) {
+    .install-inner {
+      grid-template-columns: 1fr 1.2fr;
+      gap: var(--space-3xl);
+      align-items: center;
+    }
+  }
+
+  .install-content h2 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .install-content p {
+    font-size: 1.0625rem;
+    color: var(--color-text-secondary);
+  }
+
+  .version-badge {
+    display: inline-block;
+    margin-top: var(--space-md);
+    padding: 3px 10px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-accent);
+    background: var(--color-accent-subtle);
+    border-radius: var(--radius-full);
+  }
+
+  .install-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  /* Outer border wrapper */
+  .install-card-border {
+    position: relative;
+    padding: 1px;
+    border-radius: var(--radius-md);
+    background: var(--color-border-subtle);
+    overflow: hidden;
+    transition: background var(--duration-normal) var(--ease-out);
+  }
+
+  .install-card-border:hover {
+    background: var(--color-border);
+  }
+
+  .install-card-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      var(--color-accent) 0%,
+      transparent 40%
+    );
+    opacity: 0;
+    transition: opacity var(--duration-normal) var(--ease-out);
+    pointer-events: none;
+  }
+
+  .install-card-border:hover::before {
+    opacity: 1;
+  }
+
+  .install-card-border-primary {
+    background: color-mix(in srgb, var(--color-accent) 25%, var(--color-border-subtle));
+  }
+
+  .install-card-border-primary:hover {
+    background: color-mix(in srgb, var(--color-accent) 30%, var(--color-border));
+  }
+
+  /* Inner link */
+  .install-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    border-radius: calc(var(--radius-md) - 1px);
+    background: var(--color-bg-elevated);
+  }
+
+  .install-card-primary {
+    background: color-mix(in srgb, var(--color-accent) 8%, var(--color-bg-elevated));
+  }
+
+  .install-icon {
+    flex-shrink: 0;
+    color: var(--color-text-secondary);
+  }
+
+  .install-card-primary .install-icon {
+    color: var(--color-accent);
+  }
+
+  .install-card-title {
+    display: block;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .install-card-sub {
+    display: block;
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    margin-top: 1px;
+  }
+
+  .install-arrow {
+    margin-left: auto;
+    color: var(--color-text-tertiary);
+    flex-shrink: 0;
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .install-card:hover .install-arrow {
+    transform: translateX(3px);
+  }
+
+  .install-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    padding-left: var(--space-lg);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .install-link:hover {
+    color: var(--color-text);
+  }
+</style>

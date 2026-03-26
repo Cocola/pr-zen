@@ -1,0 +1,448 @@
+---
+---
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-content">
+      <h1 class="hero-anim hero-anim-1">Navigate noisy PRs<br />without losing your mind</h1>
+      <p class="hero-sub hero-anim hero-anim-2">
+        PR Zen adds a floating navigator that cuts through bot noise — so you can focus on the reviews that matter.
+      </p>
+      <div class="hero-actions hero-anim hero-anim-3">
+        <div class="btn-glow btn-glow-primary spotlight-card">
+          <a
+            id="hero-cta-primary"
+            href="https://chromewebstore.google.com/detail/pr-zen/cngllfifbbjllfeloceeiihafomekdee"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span id="hero-cta-text">Install for Chrome</span>
+          </a>
+        </div>
+        <div class="btn-glow btn-glow-secondary spotlight-card">
+          <a
+            href="https://github.com/Cocola/pr-zen"
+            class="btn btn-secondary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CSS-only extension mockup -->
+    <div class="hero-visual hero-anim hero-anim-4" aria-hidden="true">
+      <div class="mockup">
+        <!-- Simulated PR timeline (background) -->
+        <div class="mock-timeline">
+          <div class="mock-item mock-human">
+            <div class="mock-avatar mock-avatar-human"></div>
+            <div class="mock-body">
+              <div class="mock-name" style="width: 96px"></div>
+              <div class="mock-line" style="width: 180px"></div>
+              <div class="mock-line" style="width: 140px"></div>
+            </div>
+          </div>
+          <div class="mock-item mock-bot-item">
+            <div class="mock-avatar mock-avatar-bot"></div>
+            <div class="mock-body">
+              <div class="mock-name" style="width: 72px"></div>
+              <div class="mock-line" style="width: 200px"></div>
+            </div>
+          </div>
+          <div class="mock-item mock-bot-item">
+            <div class="mock-avatar mock-avatar-bot"></div>
+            <div class="mock-body">
+              <div class="mock-name" style="width: 80px"></div>
+              <div class="mock-line" style="width: 160px"></div>
+            </div>
+          </div>
+          <div class="mock-item mock-bot-item">
+            <div class="mock-avatar mock-avatar-bot"></div>
+            <div class="mock-body">
+              <div class="mock-name" style="width: 64px"></div>
+              <div class="mock-line" style="width: 190px"></div>
+              <div class="mock-line" style="width: 120px"></div>
+            </div>
+          </div>
+          <div class="mock-item mock-human">
+            <div class="mock-avatar mock-avatar-human"></div>
+            <div class="mock-body">
+              <div class="mock-name" style="width: 88px"></div>
+              <div class="mock-line" style="width: 170px"></div>
+            </div>
+          </div>
+          <div class="mock-item mock-bot-item">
+            <div class="mock-avatar mock-avatar-bot"></div>
+            <div class="mock-body">
+              <div class="mock-name" style="width: 76px"></div>
+              <div class="mock-line" style="width: 150px"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PR Zen floating pill -->
+        <div class="mock-pill">
+          <span class="pill-dot pill-dot-human"></span>
+          <span class="pill-stat">2 reviews</span>
+          <span class="pill-sep">&middot;</span>
+          <span class="pill-dot pill-dot-bot"></span>
+          <span class="pill-stat">21 bots</span>
+          <span class="pill-sep">&middot;</span>
+          <span class="pill-dot pill-dot-alert"></span>
+          <span class="pill-stat">4 alerts</span>
+        </div>
+
+        <!-- PR Zen timeline panel -->
+        <div class="mock-panel">
+          <div class="panel-header">
+            <span class="panel-title">PR Zen</span>
+            <span class="panel-close">&times;</span>
+          </div>
+          <div class="panel-items">
+            <div class="panel-entry">
+              <span class="entry-dot" style="background: var(--color-human)"></span>
+              <span class="entry-text">Review by alice</span>
+              <span class="entry-time">2h</span>
+            </div>
+            <div class="panel-entry">
+              <span class="entry-dot" style="background: var(--color-bot)"></span>
+              <span class="entry-text">Vercel Preview</span>
+              <span class="entry-badge">x4</span>
+              <span class="entry-time">1h</span>
+            </div>
+            <div class="panel-entry entry-active">
+              <span class="entry-dot" style="background: var(--color-alert)"></span>
+              <span class="entry-text">Codecov — coverage decreased</span>
+              <span class="entry-time">45m</span>
+            </div>
+            <div class="panel-entry">
+              <span class="entry-dot" style="background: var(--color-bot)"></span>
+              <span class="entry-text">SonarCloud — Quality Gate</span>
+              <span class="entry-time">30m</span>
+            </div>
+            <div class="panel-entry">
+              <span class="entry-dot" style="background: var(--color-human)"></span>
+              <span class="entry-text">Review by bob</span>
+              <span class="entry-time">15m</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Browser detection for CTA
+  const ctaLink = document.getElementById('hero-cta-primary') as HTMLAnchorElement;
+  const ctaText = document.getElementById('hero-cta-text')!;
+
+  if (navigator.userAgent.includes('Firefox')) {
+    ctaLink.href = 'https://addons.mozilla.org/en-US/firefox/addon/pr-zen/';
+    ctaText.textContent = 'Install for Firefox';
+  }
+</script>
+
+<style>
+  .hero {
+    padding-top: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+    overflow: hidden;
+  }
+
+  @media (min-width: 1024px) {
+    .hero {
+      padding-top: var(--space-3xl);
+      padding-bottom: var(--space-2xl);
+    }
+  }
+
+  .hero-inner {
+    display: grid;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-inner {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4xl);
+    }
+  }
+
+  /* Hero entrance stagger */
+  .hero-anim {
+    animation: fade-up 600ms var(--ease-out) both;
+  }
+  .hero-anim-1 { animation-delay: 0ms; }
+  .hero-anim-2 { animation-delay: 80ms; }
+  .hero-anim-3 { animation-delay: 160ms; }
+  .hero-anim-4 { animation-delay: 200ms; }
+
+  .hero-content {
+    max-width: 540px;
+  }
+
+  .hero-sub {
+    margin-top: var(--space-lg);
+    font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+  }
+
+  /* Button border glow wrappers */
+  .btn-glow {
+    position: relative;
+    padding: 1px;
+    border-radius: calc(var(--radius-md) + 1px);
+    overflow: hidden;
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .btn-glow:hover {
+    transform: translateY(-1px);
+  }
+
+  .btn-glow::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      150px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      var(--color-accent) 0%,
+      transparent 45%
+    );
+    opacity: 0;
+    transition: opacity var(--duration-normal) var(--ease-out);
+    pointer-events: none;
+  }
+
+  .btn-glow:hover::before {
+    opacity: 1;
+  }
+
+  .btn-glow-primary {
+    background: var(--color-accent);
+  }
+
+  .btn-glow-secondary {
+    background: var(--color-border);
+  }
+
+  .btn-glow .btn {
+    border: none;
+    border-radius: var(--radius-md);
+    position: relative;
+  }
+
+  /* ===== Mockup ===== */
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+  }
+
+  .mockup {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-xl);
+  }
+
+  /* Simulated PR timeline */
+  .mock-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    opacity: 0.45;
+  }
+
+  .mock-item {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: flex-start;
+  }
+
+  .mock-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-full);
+    flex-shrink: 0;
+  }
+
+  .mock-avatar-human {
+    background: var(--color-accent-subtle);
+    border: 1.5px solid var(--color-human);
+  }
+
+  .mock-avatar-bot {
+    background: var(--color-bg-subtle);
+    border: 1.5px solid var(--color-border);
+  }
+
+  .mock-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 2px;
+  }
+
+  .mock-name {
+    height: 8px;
+    background: var(--color-text-tertiary);
+    border-radius: 4px;
+    opacity: 0.5;
+  }
+
+  .mock-line {
+    height: 6px;
+    background: var(--color-border);
+    border-radius: 3px;
+  }
+
+  /* Floating pill overlay */
+  .mock-pill {
+    animation: scale-in 400ms var(--ease-out) 600ms both;
+    position: absolute;
+    bottom: var(--space-lg);
+    right: var(--space-lg);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-lg);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    z-index: 2;
+  }
+
+  .pill-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+  }
+
+  .pill-dot-human { background: var(--color-human); }
+  .pill-dot-bot { background: var(--color-bot); }
+  .pill-dot-alert { background: var(--color-alert); }
+
+  .pill-sep {
+    color: var(--color-text-tertiary);
+    font-size: 0.625rem;
+  }
+
+  /* Timeline panel overlay */
+  .mock-panel {
+    animation: scale-in 400ms var(--ease-out) 450ms both;
+    position: absolute;
+    bottom: 52px;
+    right: var(--space-lg);
+    width: 260px;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-xl);
+    z-index: 3;
+    overflow: hidden;
+  }
+
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .panel-title {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .panel-close {
+    color: var(--color-text-tertiary);
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .panel-items {
+    padding: 6px 0;
+  }
+
+  .panel-entry {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    transition: background var(--duration-fast) var(--ease-out);
+  }
+
+  .entry-active {
+    background: var(--color-bg-subtle);
+  }
+
+  .entry-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    flex-shrink: 0;
+  }
+
+  .entry-text {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .entry-badge {
+    font-size: 0.625rem;
+    font-weight: 600;
+    padding: 1px 5px;
+    background: var(--color-bg-subtle);
+    border-radius: var(--radius-full);
+    color: var(--color-text-tertiary);
+  }
+
+  .entry-time {
+    font-size: 0.6875rem;
+    color: var(--color-text-tertiary);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 639px) {
+    .mock-panel {
+      width: 220px;
+      right: var(--space-md);
+      bottom: 48px;
+    }
+
+    .mock-pill {
+      right: var(--space-md);
+      bottom: var(--space-md);
+    }
+  }
+</style>

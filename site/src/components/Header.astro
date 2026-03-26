@@ -1,0 +1,125 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+---
+
+<header class="header">
+  <div class="container header-inner">
+    <a href={import.meta.env.BASE_URL} class="logo" aria-label="PR Zen home">
+      <img src={`${import.meta.env.BASE_URL}/logo-48.png`} alt="" width="28" height="28" />
+      <span class="logo-text">PR Zen</span>
+    </a>
+
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#features" class="nav-link">Features</a>
+      <a href="#install" class="nav-link">Install</a>
+      <a
+        href="https://github.com/Cocola/pr-zen"
+        class="nav-link"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="GitHub repository (opens in new tab)"
+      >
+        GitHub
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M7 17L17 7"/>
+          <path d="M7 7h10v10"/>
+        </svg>
+      </a>
+    </nav>
+
+    <ThemeToggle />
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector('.header') as HTMLElement;
+  let ticking = false;
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        header.classList.toggle('is-scrolled', window.scrollY > 16);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+</script>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    transition: border-color var(--duration-normal) var(--ease-out),
+                box-shadow var(--duration-normal) var(--ease-out);
+  }
+
+  .header.is-scrolled {
+    border-bottom-color: var(--color-border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    flex-shrink: 0;
+  }
+
+  .logo img {
+    border-radius: var(--radius-sm);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 450;
+    color: var(--color-text-secondary);
+    border-radius: var(--radius-sm);
+    transition: color var(--duration-fast) var(--ease-out),
+                background var(--duration-fast) var(--ease-out);
+  }
+
+  .nav-link:hover {
+    color: var(--color-text);
+    background: var(--color-bg-subtle);
+  }
+
+  @media (max-width: 639px) {
+    .nav-link {
+      padding: 0.375rem 0.5rem;
+      font-size: 0.8125rem;
+    }
+
+    .logo-text {
+      display: none;
+    }
+  }
+</style>
