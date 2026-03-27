@@ -55,8 +55,10 @@ Install from the [Chrome Web Store](https://chrome.google.com/webstore/detail/cn
 
 ## Features
 
-**Floating Pill** — sits in the bottom-right corner showing live stats:
-`2 reviews · 21 bots · 4 alerts`
+**Floating Pill** — sits in the bottom-right corner with the PR Zen logo and live colored stats:
+`3 reviews · 21 bots · 4 alerts`
+
+**Auto-open on large screens** — on wide viewports (≥ 1600px), the panel opens automatically. The pill morphs into a minimal close button. On laptops, the pill stays collapsed.
 
 **Timeline Panel** — click the pill (or press `Alt+Z`) to open a chronological timeline of all PR comments, classified by type:
 
@@ -79,6 +81,8 @@ Install from the [Chrome Web Store](https://chrome.google.com/webstore/detail/cn
 **Configurable** — customize bot patterns, alert keywords, and activation threshold from the extension popup.
 
 **Works with GitHub SPA** — handles Turbo/pjax navigation without breaking.
+
+**Alert highlighting** — the pill border turns red when CI failures or vulnerabilities are detected, visible at a glance.
 
 **Conditional activation** — the pill only appears on PRs with 3+ bot comments. Clean PRs stay clean.
 
