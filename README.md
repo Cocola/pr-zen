@@ -56,7 +56,7 @@ Install from the [Chrome Web Store](https://chrome.google.com/webstore/detail/cn
 ## Features
 
 **Floating Pill** — sits in the bottom-right corner with the PR Zen logo and live colored stats:
-`🐸 3 reviews · 21 bots · 4 alerts`
+`3 reviews · 21 bots · 4 alerts`
 
 **Auto-open on large screens** — on wide viewports (≥ 1600px), the panel opens automatically. The pill morphs into a minimal close button. On laptops, the pill stays collapsed.
 
