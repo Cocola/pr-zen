@@ -6,6 +6,7 @@
   --przen-text: var(--fgColor-default, var(--color-fg-default, #1c1c1e));
   --przen-muted: var(--fgColor-muted, var(--color-fg-muted, #6b7280));
   --przen-border: var(--borderColor-default, var(--color-border-default, rgba(0, 0, 0, 0.08)));
+  --przen-pill-border: var(--borderColor-muted, var(--color-border-muted, rgba(0, 0, 0, 0.12)));
   --przen-highlight: #6366f1;
   --przen-human: var(--fgColor-success, var(--color-success-fg, #16a34a));
   --przen-bot: var(--fgColor-muted, var(--color-fg-muted, #64748b));
@@ -26,6 +27,7 @@
 /* Dark mode fallback if GitHub vars are not available */
 @media (prefers-color-scheme: dark) {
   :root {
+    --przen-pill-border: rgba(255, 255, 255, 0.1);
     --przen-shadow-sm: rgba(0, 0, 0, 0.12);
     --przen-shadow-md: rgba(0, 0, 0, 0.24);
     --przen-shadow-lg: rgba(0, 0, 0, 0.36);
@@ -96,7 +98,7 @@
 
 #przen-pill {
   appearance: none;
-  border: 1px solid var(--przen-border);
+  border: 1px solid var(--przen-pill-border);
   position: fixed;
   bottom: 24px;
   right: 24px;
@@ -104,17 +106,23 @@
   background: var(--przen-bg);
   color: var(--przen-text);
   border-radius: 24px;
-  padding: 12px 20px;
+  padding: 12px 20px 12px 14px;
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 13px;
   cursor: pointer;
-  box-shadow: 0 1px 3px var(--przen-shadow-sm), 0 4px 24px var(--przen-shadow-md);
+  box-shadow: 0 1px 3px var(--przen-shadow-sm), 0 4px 24px var(--przen-shadow-md), 0 0 0 1px var(--przen-pill-border);
   display: flex;
   align-items: center;
   gap: 10px;
   user-select: none;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-radius 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.15s ease,
+              box-shadow 0.15s ease;
   line-height: 1;
   animation: przen-pill-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -122,6 +130,27 @@
 #przen-pill:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 32px var(--przen-shadow-lg);
+}
+
+#przen-pill.przen-pill-mini {
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  justify-content: center;
+  color: var(--przen-muted);
+}
+
+#przen-pill.przen-pill-mini:hover {
+  color: var(--przen-text);
+}
+
+#przen-pill.przen-pill-mini svg {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#przen-pill.przen-pill-mini:hover svg {
+  transform: rotate(90deg);
 }
 
 #przen-pill.przen-pill-muted {
@@ -148,6 +177,26 @@
 #przen-pill .przen-sep {
   color: var(--przen-muted);
   font-weight: 400;
+}
+
+#przen-pill .przen-pill-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  line-height: 0;
+  margin: -6px 0;
+}
+
+#przen-pill .przen-pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+#przen-pill.przen-pill-alert {
+  border-color: var(--przen-alert);
+  box-shadow: 0 1px 3px var(--przen-shadow-sm), 0 4px 24px var(--przen-shadow-md), 0 0 0 1px var(--przen-alert);
 }
 
 /* ── Panel ── */
@@ -255,6 +304,31 @@
 .przen-legend-count {
   font-weight: 700;
   font-variant-numeric: tabular-nums;
+}
+
+.przen-close {
+  appearance: none;
+  border: none;
+  background: none;
+  color: var(--przen-muted);
+  cursor: pointer;
+  padding: 4px;
+  margin-left: auto;
+  line-height: 0;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease;
+}
+
+.przen-close:hover {
+  color: var(--przen-text);
+}
+
+.przen-close:focus-visible {
+  outline: 2px solid var(--przen-highlight);
+  outline-offset: 2px;
 }
 
 /* ── Items ── */
