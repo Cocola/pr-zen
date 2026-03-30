@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         PR Zen
 // @namespace    https://github.com/pr-zen
-// @version      0.3.0
+// @version      0.3.1
 // @description  Floating navigator for noisy GitHub Pull Requests 🐙🧘
 // @author       PR Zen
 // @match        https://github.com/*/*/pull/*
