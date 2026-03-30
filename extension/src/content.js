@@ -174,6 +174,21 @@ function classifyComments() {
     entries.push({ el: item, author, title, preview, timestamp, timeAgo, type });
   });
 
+  // Resolve alerts: if the same bot has a later non-alert entry, downgrade alert to bot
+  const lastBotType = new Map();
+  for (const entry of entries) {
+    if (entry.type === 'bot' || entry.type === 'alert') {
+      lastBotType.set(entry.author, entry.type);
+    }
+  }
+  for (const entry of entries) {
+    if (entry.type === 'alert' && lastBotType.get(entry.author) === 'bot') {
+      entry.type = 'bot';
+      counts.alert--;
+      counts.bot++;
+    }
+  }
+
   return { entries, counts };
 }
 
@@ -472,6 +487,7 @@ function morphPill(toMini) {
     pill.innerHTML = CLOSE_SVG;
     // Force layout so the browser registers the explicit width
     pill.offsetWidth;    pill.classList.add('przen-pill-mini');
+    pill.classList.remove('przen-pill-alert');
     pill.style.width = '';
   } else {
     // Expand: measure target width, then animate to it
