@@ -128,6 +128,17 @@
       margin-top: 4px;
     }
 
+    .section-title {
+      font-size: 10px;
+      color: #6b7280;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
     .footer {
       margin-top: 12px;
       padding-top: 10px;
@@ -160,10 +171,31 @@
     </label>
   </div>
 
+  <div class="section-title">Pull Requests</div>
+
   <div class="field">
     <label for="minBotComments">Min bot comments to show</label>
     <input type="number" id="minBotComments" min="1" max="50" value="3">
+    <div class="hint">Show navigator when a PR has this many bot comments</div>
   </div>
+
+  <div class="section-title">Issues</div>
+
+  <div class="toggle-row">
+    <span class="toggle-label">Enabled on Issues</span>
+    <label class="toggle">
+      <input type="checkbox" id="enabledOnIssues" checked>
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="field">
+    <label for="minIssueComments">Min comments to show</label>
+    <input type="number" id="minIssueComments" min="1" max="100" value="5">
+    <div class="hint">Show navigator when an issue has this many comments</div>
+  </div>
+
+  <div class="section-title">Detection</div>
 
   <div class="field">
     <label for="botPatterns">Bot patterns</label>

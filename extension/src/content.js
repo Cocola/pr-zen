@@ -4,7 +4,9 @@
 
 const DEFAULT_CONFIG = {
   enabled: true,
+  enabledOnIssues: true,
   minBotComments: 3,
+  minIssueComments: 5,
   botPatterns: [
     '[bot]', 'github-actions', 'dependabot', 'codecov', 'sonarcloud',
     'vercel', 'netlify', 'renovate', 'claude-code-review', 'copilot',
@@ -26,7 +28,21 @@ const COLORS = {
   muted: 'var(--przen-muted)',
 };
 
-const TYPE_LABELS = { human: 'Reviews', bot: 'Bots', alert: 'Alerts' };
+function getPageType() {
+  const path = location.pathname;
+  if (/\/pull\/\d+/.test(path)) return 'pr';
+  if (/\/issues\/\d+/.test(path)) return 'issue';
+  return null;
+}
+
+function getTypeLabels() {
+  return {
+    human: getPageType() === 'issue' ? 'Comments' : 'Reviews',
+    bot: 'Bots',
+    alert: 'Alerts',
+  };
+}
+
 const HIGHLIGHT_DURATION = 2000;
 const LOGO_SVG = '<svg width="24" height="24" viewBox="0 0 455 455" fill="currentColor"><path d="M221.199 284.106c6.965-.41 18.68-1.26 24.205 2.945 14.89 11.44-8.815 18.98-10.19 22.73-5.45 14.86 18.615 24.665 30.38 12.825 2.515-2.525 9.055-9.825 13.02-7.42 3.59 2.175 3.615 5.875 1.215 9.135-11.045 14.2-32.12 19.31-47.165 8.235l-4.185-4.28c-.84.945-1.88 2.18-2.79 2.995-12.959 11.635-34.652 8.435-46.008-3.945-2.725-2.97-6.433-8.57-2.009-11.795 6.45-4.6 9.89 5.345 14.268 8.135 7.21 4.6 18.895 6.315 25.684.115 4.47-4.08 4.73-8.75 4.955-14.365-6.155-2.665-13.587-6.795-14.795-13.955-1.43-8.48 7.098-10.705 13.415-11.355M274.439 253.816c8.145-.025 9.075 11.3 19.45 13.95 7.5 2.035 17.89.795 23.465-5.02 3.45-3.595 6.005-10.89 12.55-8.455 3.89 3.45 1.8 7.875-.44 11.44-9.93 11.675-17.605 13.73-32.785 13.335-10.295-.27-35.805-16.685-22.24-25.25M128.419 253.861c7.79-.195 9.827 11.56 19.265 13.645 8.055 1.78 16.16 2.47 22.773-3.89 3.689-3.545 7.528-11.77 13.599-9.525 3.797 3.335 1.726 8.175-.493 11.635-8.257 9.77-17.241 14.335-30.302 13.535a35.45 35.45 0 0 1-24.854-12.165c-4.005-4.665-6.102-9.385.012-13.235"/><path d="M84.271 69.003c26.321.837 53.475 20.217 73.387 36.044 27.553-8.259 49.249-11.241 78.046-10.65 21.56.516 42.94 4.068 63.51 10.55 5.69-3.929 11.15-8.836 16.89-12.79 10.701-7.376 54.745-33.996 64.025-18.096 8.72 14.938 10.5 42.187 8.655 59.69-.52 7.087-2.385 13.995-2.96 20.529 22.6 30.858 32.01 72.376 25.96 110.006-.79 4.94-2.115 10.945-2.66 15.74 6.558-.127 13.582.777 20.112 1.618l.408.052c6.815.87 13.805 1.691 20.57 2.83 4.23.715 6.525 5.595 2.765 8.53-1.17.98-3.645.866-5.055.886-13.995-1.001-27.83-4.211-41.935-3.871-1.85 6.005-3.645 10.465-6.014 16.275 7.285 1.62 46.144 9.256 46.444 17.64-1.595 4.24-4.47 4.59-8.449 3.415-14.205-4.2-28.816-9.945-43.606-11.725-17.95 32.235-50.45 48.62-83.78 59.92l-12.175 3.335c-14.165 4.54-40.285 5.856-55.08 6.926-25.405.755-59.913-.45-84.502-7.005l-12.949-3.231-.506-.22c-6.947-2.984-14.761-4.96-21.892-8.19-28.058-12.71-44.432-26.195-61.145-51.325-15.862 2.12-30.226 7.74-45.525 11.955-6.64 1.83-7.622-6.434-5.287-7.614 13.657-6.91 30.77-9.876 45.41-14.271a182 182 0 0 1-5.908-15.655c-14.95-.155-29.444 2.85-44.292 3.69-1.69.095-2.72-.425-3.96-1.56-1.32-2.8-1.202-6.565 2.376-7.39 13.856-3.185 28.426-3.745 42.53-5.43-9.288-46.086-3.884-86.876 23.837-125.788-5.615-24.288-6.315-45.336.72-69.652 1.448-5.008 5.82-15.366 12.035-15.168m110.054 139.493c-11.182-1.699-31.868-5.825-42.722-3.906-66.585 7.784-74.68 99.997-25.474 135.646 38.176 27.66 83.54 36.17 129.64 29.94a176.5 176.5 0 0 0 43.26-11.675c25.775-11.78 47.865-26.305 58.245-54.189 13.245-34.725 1.005-82.143-36.07-96.114-20.46-7.709-40.915-2.228-61.63.784-22.34 3.247-42.985 2.898-65.249-.486m171.9 103.74c-9.14 17.845-15.801 27.2-32.816 39.23-4.11 2.905-11.69 7.51-15.21 10.395l12.761-5.169c20.84-9.16 39.135-23.166 51.88-42.21-3.875-.55-13.23-1.481-16.615-2.246m-281.815.956-10.141 1.064c13.417 21.215 34.416 35.62 57.442 44.75 1.637.66 3.842 1.76 5.522 1.735-2.99-2.63-10.521-6.459-14.24-9.059-15.585-10.895-23.73-22.381-31.813-39.04zm-21.912-22.375c1.749 4.479 3.375 8.985 5.684 13.209 5.882-1.075 12.154-1.624 18.12-2.264l.768-.471c-.112-2.705-1.281-6.02-2.064-8.7-6.397-.615-16.261-1.774-22.508-1.774m330.751-.186c-5.92.43-15.87 1.185-21.56 2.375-.725 2.605-1.785 5.446-1.525 8.051 1 1.185.36.72 2.28.965 4.53.51 12.051 1.139 16.281 1.989 2.049-3.945 4.24-8.005 5.16-12.385-.43-.96-.101-.745-.636-.995m-22.18-210.904c-19.26 2.4-37.47 13.194-52.995 24.444-4.5 3.259-12.19 9.953-16.59 12.479-56.875-15.365-89.043-15.951-146.244.174-17.382-13.671-46.732-36.233-69.46-36.983-2.951 4.906-4.318 10.608-5.426 16.186-4.114 20.719-2.44 38.916 2.483 59.144-2.632 6.737-10.375 16.016-14.023 23.462a146.35 146.35 0 0 0-9.87 100.783c7.846.65 16.831 1.82 24.55 2.21-.514-26.635 4.666-47.453 23.223-67.327 32.823-35.153 77.221-15.23 117.588-13.852 42.499 1.451 89.084-22.803 124.389 12.203 7.57 7.332 13.51 16.731 17.755 26.294 6.475 17.452 7.115 24.037 6.825 42.677 7.74-.59 17.01-1.26 24.62-2.26 8.68-38.562 5.845-75.35-15.195-109.959-2.645-4.351-6.105-9.122-8.38-13.564 4.19-23.638 8.545-53.748-3.25-76.111"/></svg>';
 const AUTO_OPEN_MIN_WIDTH = 1600;
@@ -65,6 +81,16 @@ if (chrome?.storage?.onChanged) {
 }
 
 // ── Classification ───────────────────────────────────────────────────────────
+
+const AUTHOR_SELECTORS = ['.author', '[class*="AuthorName"]', '[data-hovercard-type="user"]'];
+
+function findAuthor(item) {
+  for (const sel of AUTHOR_SELECTORS) {
+    const el = item.querySelector(sel);
+    if (el && el.textContent.trim()) return el;
+  }
+  return null;
+}
 
 /**
  * Detect if a comment author is a bot by checking for a [bot] badge
@@ -132,7 +158,7 @@ function extractTitle(item) {
  * @returns {{ entries: Array<{el: Element, author: string, title: string, preview: string, timestamp: string, timeAgo: string, type: 'human'|'bot'|'alert'}>, counts: {human: number, bot: number, alert: number} }}
  */
 function classifyComments() {
-  const timelineItems = document.querySelectorAll('.js-timeline-item');
+  const timelineItems = document.querySelectorAll('.js-timeline-item, .react-issue-comment');
   const entries = [];
   const counts = { human: 0, bot: 0, alert: 0 };
   const seen = new Set();
@@ -143,7 +169,7 @@ function classifyComments() {
                  wrapper;
     if (seen.has(item)) return;
 
-    const authorEl = item.querySelector('.author, [data-hovercard-type="user"]');
+    const authorEl = findAuthor(item);
     if (!authorEl) return;
 
     const body = item.querySelector('.comment-body, .markdown-body');
@@ -272,8 +298,9 @@ function updatePill(pill, counts) {
   logo.innerHTML = LOGO_SVG;
   pill.appendChild(logo);
 
+  const labels = getTypeLabels();
   const entries = [
-    { count: counts.human, color: COLORS.human, label: 'review' },
+    { count: counts.human, color: COLORS.human, label: labels.human.toLowerCase().replace(/s$/, '') },
     { count: counts.bot, color: COLORS.bot, label: 'bot' },
     { count: counts.alert, color: COLORS.alert, label: 'alert' },
   ];
@@ -299,7 +326,7 @@ function renderHeader(panel, counts) {
   const header = document.createElement('div');
   header.className = 'przen-header';
 
-  for (const [type, label] of Object.entries(TYPE_LABELS)) {
+  for (const [type, label] of Object.entries(getTypeLabels())) {
     if (!counts[type]) continue;
     const item = document.createElement('div');
     item.className = 'przen-legend-item';
@@ -346,8 +373,9 @@ function renderItem(list, entry) {
   dot.style.background = color;
   row.appendChild(dot);
 
-  // Title is the primary info (e.g. "Review Claude", "Vercel Preview")
-  const titleText = entry.title || entry.author;
+  // Title: on issues show author, on PRs show title or author
+  const isIssuePage = getPageType() === 'issue';
+  const titleText = isIssuePage ? (entry.author || entry.title) : (entry.title || entry.author);
   const titleSpan = document.createElement('span');
   titleSpan.className = 'przen-item-title';
   titleSpan.textContent = titleText;
@@ -368,10 +396,12 @@ function renderItem(list, entry) {
     row.appendChild(timeSpan);
   }
 
-  // Secondary line: author (if title exists) or preview
+  // Secondary line: preview text (on issues always preview, on PRs author if title exists)
   const secondarySpan = document.createElement('div');
   secondarySpan.className = 'przen-item-secondary';
-  if (entry.title) {
+  if (isIssuePage) {
+    secondarySpan.textContent = entry.preview;
+  } else if (entry.title) {
     secondarySpan.textContent = entry.author;
   } else {
     secondarySpan.textContent = entry.preview;
@@ -402,7 +432,7 @@ function updatePanel(panel, entries, counts) {
   const list = document.createElement('div');
   list.id = 'przen-panel-list';
   list.setAttribute('role', 'listbox');
-  list.setAttribute('aria-label', 'PR comments');
+  list.setAttribute('aria-label', 'Comments');
   list.setAttribute('tabindex', '0');
 
   if (!entries.length) {
@@ -584,7 +614,12 @@ function refresh() {
       return;
     }
 
-    if (totalBots < config.minBotComments) {
+    const pageType = getPageType();
+    const shouldShow =
+      pageType === 'pr'    ? totalBots >= config.minBotComments :
+      pageType === 'issue' ? config.enabledOnIssues && total >= config.minIssueComments :
+      false;
+    if (!shouldShow) {
       if (pill) {
         pill.style.display = 'none';
         pill.classList.remove('przen-pill-muted');
@@ -696,7 +731,7 @@ const observer = new MutationObserver((mutations) => {
 
   clearTimeout(debounceTimer);
   debounceTimer = setTimeout(() => {
-    if (/\/pull\/\d+/.test(location.pathname)) {
+    if (/\/(pull|issues)\/\d+/.test(location.pathname)) {
       refresh();
     } else {
       cleanup();
@@ -705,7 +740,7 @@ const observer = new MutationObserver((mutations) => {
 });
 
 document.addEventListener('turbo:load', () => {
-  if (/\/pull\/\d+/.test(location.pathname)) {
+  if (/\/(pull|issues)\/\d+/.test(location.pathname)) {
     cleanup();
     setTimeout(refresh, 300);
   } else {

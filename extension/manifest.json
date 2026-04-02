@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "PR Zen",
-  "version": "1.4.1",
-  "description": "Floating navigator for noisy GitHub Pull Requests",
+  "version": "1.4.2",
+  "description": "Floating navigator for noisy GitHub Pull Requests and Issues",
   "icons": {
     "16": "icons/icon-16.png",
     "48": "icons/icon-48.png",
@@ -17,7 +17,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://github.com/*/*/pull/*"],
+      "matches": ["https://github.com/*/*/pull/*", "https://github.com/*/*/issues/*"],
       "js": ["src/content.js"],
       "css": ["src/styles.css"],
       "run_at": "document_idle"
