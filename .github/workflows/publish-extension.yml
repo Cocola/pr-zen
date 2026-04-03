@@ -1,0 +1,28 @@
+name: Publish Extension
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+jobs:
+  publish-chrome:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build zip
+        run: cd extension && zip -r ../pr-zen.zip . -x ".*"
+
+      - name: Upload to Chrome Web Store
+        run: npx chrome-webstore-upload-cli@3 upload --source pr-zen.zip --extension-id cngllfifbbjllfeloceeiihafomekdee --auto-publish
+        env:
+          CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
+
+      - name: Upload zip as release artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-zen-${{ github.ref_name }}
+          path: pr-zen.zip
