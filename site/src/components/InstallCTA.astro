@@ -6,7 +6,7 @@
     <div class="install-content animate-on-scroll">
       <h2>Get PR Zen</h2>
       <p>Free, open-source, installs in seconds.</p>
-      <span class="version-badge">v1.3.0</span>
+      <a href={`${import.meta.env.BASE_URL}/whats-new.html`} class="version-badge">v1.4.3</a>
     </div>
 
     <div class="install-options">
@@ -134,6 +134,11 @@
     color: var(--color-accent);
     background: var(--color-accent-subtle);
     border-radius: var(--radius-full);
+    transition: background var(--duration-fast) var(--ease-out);
+  }
+
+  .version-badge:hover {
+    background: color-mix(in srgb, var(--color-accent) 20%, var(--color-accent-subtle));
   }
 
   .install-options {
