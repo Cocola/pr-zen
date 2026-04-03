@@ -1,0 +1,244 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const releases = [
+  {
+    version: '1.4.2',
+    date: '2026-04-02',
+    title: 'Issues support',
+    highlights: [
+      { tag: 'new', text: 'Navigator now works on GitHub Issues — not just Pull Requests' },
+      { tag: 'new', text: 'Dedicated "Enabled on Issues" toggle with configurable comment threshold' },
+      { tag: 'new', text: 'Adaptive labels: "Comments" on issues, "Reviews" on PRs' },
+      { tag: 'improved', text: 'Author names displayed prominently in issue comment items' },
+      { tag: 'improved', text: 'Settings popup organized into Pull Requests / Issues / Detection sections' },
+    ],
+  },
+  {
+    version: '1.4.1',
+    date: '2026-03-28',
+    title: 'Polish & fixes',
+    highlights: [
+      { tag: 'fixed', text: 'Resolved stale alerts persisting after page updates' },
+      { tag: 'fixed', text: 'Removed red border flash on mini pill when no active alerts' },
+    ],
+  },
+  {
+    version: '1.4.0',
+    date: '2026-03-27',
+    title: 'Pill visibility & quality',
+    highlights: [
+      { tag: 'new', text: 'Mini pill mode when panel is open — stays visible without taking space' },
+      { tag: 'new', text: 'Pulse animation on pill when new comments arrive' },
+      { tag: 'improved', text: 'Grouped consecutive identical bot comments with count badge' },
+      { tag: 'improved', text: 'Better alert detection — checks headings and bold text, not full body' },
+    ],
+  },
+];
+
+const tagColors: Record<string, { bg: string; text: string; label: string }> = {
+  new:      { bg: 'var(--color-accent-subtle)', text: 'var(--color-accent)', label: 'New' },
+  improved: { bg: 'var(--tag-improved-bg, #dbeafe)', text: 'var(--tag-improved-text, #2563eb)', label: 'Improved' },
+  fixed:    { bg: 'var(--tag-fixed-bg, #fef3c7)',  text: 'var(--tag-fixed-text, #d97706)',  label: 'Fixed' },
+};
+---
+
+<Base
+  title="What's New — PR Zen"
+  description="See what changed in the latest PR Zen update."
+>
+  <Header />
+
+  <main id="main" class="whats-new">
+    <div class="container">
+      <div class="page-header animate-on-scroll">
+        <h1>What's New</h1>
+        <p class="page-subtitle">Latest changes and improvements to PR Zen.</p>
+      </div>
+
+      <div class="releases">
+        {releases.map((release, i) => (
+          <article
+            class="release animate-on-scroll"
+            data-version={release.version}
+            style={`--stagger: ${i * 80}ms`}
+          >
+            <div class="release-header">
+              <span class="release-version">v{release.version}</span>
+              <h2 class="release-title">{release.title}</h2>
+              <time class="release-date" datetime={release.date}>
+                {new Date(release.date).toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                  year: 'numeric',
+                })}
+              </time>
+            </div>
+            <ul class="release-list">
+              {release.highlights.map((item) => {
+                const tag = tagColors[item.tag];
+                return (
+                  <li>
+                    <span
+                      class="tag"
+                      style={`background: ${tag.bg}; color: ${tag.text};`}
+                    >
+                      {tag.label}
+                    </span>
+                    {item.text}
+                  </li>
+                );
+              })}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Base>
+
+<script>
+  // Highlight the version from ?v= param
+  const params = new URLSearchParams(window.location.search);
+  const version = params.get('v');
+  if (version) {
+    const el = document.querySelector(`[data-version="${version}"]`);
+    if (el) {
+      el.classList.add('is-current');
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+</script>
+
+<style>
+  .whats-new {
+    padding: var(--space-4xl) 0;
+    min-height: calc(100vh - var(--header-height) - 120px);
+  }
+
+  .page-header {
+    margin-bottom: var(--space-3xl);
+  }
+
+  .page-header h1 {
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+  }
+
+  .page-subtitle {
+    margin-top: var(--space-xs);
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+  }
+
+  .releases {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  .release {
+    padding: var(--space-xl);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    transition: border-color var(--duration-normal) var(--ease-out),
+                box-shadow var(--duration-normal) var(--ease-out);
+  }
+
+  .release.is-current {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 1px var(--color-accent), var(--shadow-md);
+  }
+
+  .release-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-sm) var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+
+  .release-version {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    padding: 0.125rem 0.5rem;
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-subtle);
+    color: var(--color-text-secondary);
+  }
+
+  .is-current .release-version {
+    background: var(--color-accent-subtle);
+    color: var(--color-accent);
+  }
+
+  .release-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .release-date {
+    font-size: 0.8125rem;
+    color: var(--color-text-tertiary);
+    margin-left: auto;
+  }
+
+  .release-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .release-list li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+  }
+
+  .tag {
+    flex-shrink: 0;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0.0625rem 0.4375rem;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Dark mode tag adjustments */
+  [data-theme='dark'] {
+    --tag-improved-bg: rgba(59, 130, 246, 0.15);
+    --tag-improved-text: #60a5fa;
+    --tag-fixed-bg: rgba(245, 158, 11, 0.15);
+    --tag-fixed-text: #fbbf24;
+  }
+
+  @media (max-width: 639px) {
+    .release-header {
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .release-date {
+      margin-left: 0;
+    }
+
+    .release-list li {
+      flex-direction: column;
+      gap: 0.125rem;
+    }
+  }
+</style>
