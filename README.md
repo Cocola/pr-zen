@@ -21,6 +21,8 @@
   <a href="https://cocola.github.io/pr-zen">Website</a> · <a href="#install">Install</a> · <a href="#features">Features</a> · <a href="#how-it-works">How it works</a> · <a href="#keyboard-shortcuts">Shortcuts</a> · <a href="#privacy">Privacy</a>
 </p>
 
+https://github.com/user-attachments/assets/5116878f-70b5-4f67-acd4-d531ededf86f
+
 ---
 
 ## The Problem
